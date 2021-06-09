@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="/js/layui/css/layui.css"/>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<a href="">
+			<div class="layui-logo">后台管理系统</div>
+		</a>
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<!--<a href="javascript:;">-->
+					<!--<img src="https://gitee.com/uploads/66/890966_Leytton.png?1512991922" class="layui-nav-img"/> Leytton </a>-->
+				<dl class="layui-nav-child">
+					<dd>
+						<a href="javascript:;" onclick="addTab(this);" tab_url="http://www.llqqww.com">基本资料</a>
+					</dd>
+					<dd>
+						<a href="">安全设置</a>
+					</dd>
+				</dl>
+			</li>
+			<li class="layui-nav-item">
+				<a href="javascript:;" onclick="window.location.href='/home/login'">退了</a>
+			</li>
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree">
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;">基本信息</a>
+					<dl class="layui-nav-child">
+						<dd class="layui-this">
+							<a href="javascript:;" >基本信息</a>
+						</dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item" id="renyuan">
+					<a href="javascript:void(0);"  class="layTabPlus" tab_url="http://localhost:8088/home/lcrud">人员管理</a>
+				</li>
+				<li class="layui-nav-item" id="dianpu">
+					<a href="javascript:void(0);" class="layTabPlus" tab_url="http://localhost:8088/home/canteenList">店铺管理</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href="javascript:void(0);" class="layTabPlus" tab_url="http://localhost:8088/home/dishesList">花朵管理</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href="javascript:void(0);" class="layTabPlus" tab_url="http://localhost:8088/home/orderList">订单管理</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="layui-body">
+		<!-- 内容主体区域 -->
+		<div class="layui-tab" lay-filter="demoTab" lay-allowClose="true">
+			<ul class="layui-tab-title">
+				<li class="layui-this noclose" lay-id='base_info'>基本信息</li>
+			</ul>
+			<div class="layui-tab-content" style="padding:0px;">
+				<div class="layui-tab-item layui-show">
+					<div class="sysNotice col">
+						<blockquote class="layui-elem-quote title">基本信息</blockquote>
+						<table class="layui-table">
+							<tbody>
+							<tr>
+								<td>当前项目名称</td>
+								<td class="version">项目名称</td>
+							</tr>
+							<tr>
+								<td>开发作者</td>
+								<td class="author">HWJ</td>
+							</tr>
+							<tr>
+								<td>项目描述</td>
+								<td class="homePage"><a href="">项目描述</a></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-footer">
+
+	</div>
+</div>
+<script src="/js/layui/layui.all.js"></script>
+<script>
+    var $ = layui.jquery;
+    var layer = layui.layer;
+    var element = layui.element;
+    var util = layui.util;
+    var table = layui.table;
+ $(function(){
+	var user = localStorage.getItem("user");
+	var userType =   localStorage.getItem("userType");
+    });
+</script>
+<script src="/js/layTabPlus.js"></script>
+<script>
+    layTabPlus.init({
+        lay_filter: 'demoTab'
+    });
+</script>
+</body>
+
+</html>
+<style>
+	.sysNotice .layui-table {
+		margin-top: 0;
+		border-left: 5px solid #e2e2e2;
+	}
+
+	.layui-elem-quote.title {
+		padding: 10px 15px;
+		margin-bottom: 0;
+	}
+
+	.sysNotice {
+		width: 75%;
+	}
+	.code{
+		color: #c7254e;
+		background-color: #f9f2f4;
+		border-radius: 2px;
+		padding: 4px 2px 0;
+	}
+</style>

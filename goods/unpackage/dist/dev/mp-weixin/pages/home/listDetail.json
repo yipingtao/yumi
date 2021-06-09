@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "详情",
+  "usingComponents": {
+    "rui-date-picker": "/components/rattenking-dtpicker/rattenking-dtpicker"
+  }
+}

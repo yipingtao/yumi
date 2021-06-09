@@ -1,0 +1,114 @@
+
+view {
+	font-size: 28rpx;
+	line-height: 1.8;
+}
+.dataTimeWrapper {
+	margin: 10rpx 10rpx;
+}
+.banner {
+	height: 360rpx;
+	overflow: hidden;
+	position: relative;
+	background-color: #ccc;
+}
+.banner-img {
+	width: 100%;
+}
+.banner-title {
+	max-height: 84rpx;
+	overflow: hidden;
+	position: absolute;
+	left: 30rpx;
+	bottom: 30rpx;
+	width: 90%;
+	font-size: 32rpx;
+	font-weight: 400;
+	line-height: 42rpx;
+	color: white;
+	z-index: 11;
+}
+.article-meta {
+	padding: 20rpx 40rpx;
+	color: gray;
+}
+.article-text {
+	font-size: 26rpx;
+	line-height: 50rpx;
+	margin: 20rpx;
+}
+.article-author,
+.article-time {
+	font-size: 30rpx;
+}
+.article-content {
+	padding: 0 30rpx;
+	overflow: hidden;
+	font-size: 30rpx;
+	margin-bottom: 30rpx;
+}
+.addressDiv {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	width: 100%;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	margin: 0 40rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	color: gray;
+}
+.imageClass {
+	width: 30rpx;
+	height: 30rpx;
+	left: 20rpx;
+}
+.imageFont {
+	width: 30rpx;
+	height: 30rpx;
+	margin: 0 5rpx;
+}
+.totalWrapper {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	text-align: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	justify-items: center;
+	position: fixed;
+	bottom: 0;
+	/* background-color: #39B54A; */
+	width: 100%;
+	border-radius: 30rpx;
+}
+.rui-head {
+	font-size: 4vw;
+	height: 10vw;
+	line-height: 10vw;
+	padding: 0 4vw;
+	text-align: left;
+}
+.rui-flex {
+	display: -webkit-flex;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	font-size: 4vw;
+	padding: 0 4vw;
+}
+

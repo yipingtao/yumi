@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!-- import CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	</head>
+	<body>
+		<div id="app">
+			<el-container style=" border: 1px solid #eee;position: absolute;top:0;right: 0;width: 100%;height: 100%;overflow: auto">
+				<el-header style="font-size: 12px">
+					<span style="margin-left: 10px">后台管理系统</span>
+					<span style="float: right">{{user.name}}
+						<el-dropdown>
+							<i class="el-icon-setting" style="margin-right: 15px"></i>
+							<el-dropdown-menu slot="dropdown">
+								<!--<el-dropdown-item>修改密码</el-dropdown-item>-->
+								<el-dropdown-item @click.native="signOut">退出</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+					</span>
+				</el-header>
+				<el-container style="height: 100%;overflow: auto">
+					<el-aside width="200px" style="background-color: white;">
+						<el-menu default-active="4">
+							<el-menu-item index="1" @click="goto('user.html')">
+								<i class="el-icon-menu"></i>
+								<span slot="title">订单管理</span>
+							</el-menu-item>
+							<el-menu-item index="2" @click="goto('store.html')">
+								<i class="el-icon-menu"></i>
+								<span slot="title">店铺管理</span>
+							</el-menu-item>
+							<el-menu-item index="3" @click="goto('goods.html')">
+								<i class="el-icon-menu"></i>
+								<span slot="title">商品管理</span>
+							</el-menu-item>
+							<el-menu-item index="4" @click="goto('order.html')">
+								<i class="el-icon-menu"></i>
+								<span slot="title">订单管理</span>
+							</el-menu-item>
+						</el-menu>
+					</el-aside>
+					<el-container>
+						<el-breadcrumb class="breadcrumb" separator="/">
+							<el-breadcrumb-item>订单管理</el-breadcrumb-item>
+						</el-breadcrumb>
+						<el-main>
+							<el-row>
+								<el-col :span="24" align="right">
+									<el-popover placement="bottom" title="查询条件" width="300" trigger="click">
+										<el-form label-width="80px" align="center" ref="queryForm" :model="queryForm">
+											<el-form-item label="订单编号" prop="code">
+												<el-input v-model="queryForm.code"></el-input>
+											</el-form-item>
+											<el-button @click="resetForm">重 置</el-button>
+											<el-button type="primary" @click="pageList">确 定</el-button>
+										</el-form>
+										<el-button slot="reference" type="primary" round>搜 索</el-button>
+									</el-popover>
+								</el-col>
+							</el-row>
+							<el-table :data="tableData" border>
+								<el-table-column prop="code" label="订单编号">
+								</el-table-column>
+								<el-table-column prop="money" label="总金额">
+								</el-table-column>
+								<el-table-column prop="storeName" label="店铺名称">
+								</el-table-column>
+								<el-table-column prop="userName" label="用户名称">
+								</el-table-column>
+								<el-table-column prop="address" label="送货地址">
+								</el-table-column>
+								<el-table-column prop="state" label="订单状态">
+									<template slot-scope="scope">
+									{{scope.row.state==1?'未支付':scope.row.state==2?'待发货':scope.row.state==3?'待收货':scope.row.state==4?'待评价':'已评价'}}
+									</template>
+								</el-table-column>
+								<el-table-column label="操作" width="100">
+									<template slot-scope="scope">
+										<el-button type="text" size="small" @click="send(scope.row)" v-if="scope.row.state==2">发货</el-button>
+										<el-button type="text" size="small" @click="del(scope.row.id)">删除</el-button>
+									</template>
+								</el-table-column>
+							</el-table>
+							<div style="text-align: right">
+								<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+								 :page-sizes="[10, 20, 30]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="resultCount">
+								</el-pagination>
+							</div>
+
+							
+
+						</el-main>
+						<el-footer>后台管理系统</el-footer>
+					</el-container>
+				</el-container>
+			</el-container>
+
+
+		</div>
+	</body>
+	<!-- import Vue before Element -->
+	<!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+	<script src="/js/vue/vue.js"></script>
+	<!-- import JavaScript -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- import axios -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		const item = {
+        loginName: '2016-05-02',
+        name: '王小虎',
+        password: '上海市普陀区金沙江路 1518 弄'
+    };
+    let vueDiv = new Vue({
+        el: '#app',
+        data: {
+            tableData: [],
+            currentPage: 1,
+            pageSize: 10,
+            resultCount: 0,
+            userForm: {
+                name: '',
+                password: '',
+                loginName: '',
+				photo:''
+            },
+            queryForm:{},
+            dialogVisible: false,
+            dialogTitle: "新增",
+            user:{},
+			uploadAction: "/fileUpload/uploadSimple",
+			imageUrl:'',
+			serverUrl:'http://localhost:8088/'
+        },
+        methods: {
+            resetForm() { //重置表单
+                // if (this.$refs[formName] !== undefined) {
+                //     this.$refs[formName].resetFields();
+                // }
+				this.queryForm = {},
+				this.currentPage = 1
+				this.pageList()
+			
+            },
+            handleAvatarSuccess(res, file) {
+			   this.userForm.photo = this.serverUrl+res.data;
+               this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            handleSizeChange(val) {
+                console.log(`每页 ${val} 条`);
+                this.pageSize = val
+                this.pageList()
+            },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+                this.currentPage = val
+                this.pageList()
+            },
+            pageList() {
+                axios.get('/ordermain/getPageOrdermainList', {params:{
+                        page: this.currentPage, pageSize: this.pageSize,search:this.queryForm
+                    }
+                }).then((response) => {
+                    if (response.data.resCode == "0000") {
+                        this.tableData = response.data.resultList
+                        this.resultCount = response.data.resultCount
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+            add() {
+                this.dialogTitle = "新增"
+                this.dialogVisible = true;
+                this.userForm = {};
+				this.imageUrl = ""
+            },
+            edit(obj) {
+                this.dialogTitle = "编辑"
+                this.dialogVisible = true;
+                this.userForm = Object.assign({}, obj)
+				this.imageUrl = this.userForm.photo
+            },
+            save() {
+                axios.post('/ordermain/addOrdermain', this.userForm).then((response) => {
+                    if (response.data.resCode == "0000") {
+                        this.pageList()
+                        this.dialogVisible = false
+                    } else {
+                        this.$message.error(response.data.resDesc);
+                        console.log(response.data.resDesc);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+            del(id) {
+                axios.post('/ordermain/delOrdermain/' + id).then((response) => {
+                    if (response.data.resCode == "0000") {
+                        this.pageList()
+                        this.dialogVisible = false
+                    } else {
+                        this.$message.error(response.data.resDesc);
+                        console.log(response.data.resDesc);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+			send(obj){
+				obj.state = 3 //已发货
+				axios.post('/ordermain/changeState/',obj).then((response) => {
+				    if (response.data.resCode == "0000") {
+				        this.pageList()
+				    } else {
+				        this.$message.error(response.data.resDesc);
+				        console.log(response.data.resDesc);
+				    }
+				}).catch((error) => {
+				    console.log(error);
+				});
+			},
+			
+            signOut(){
+                localStorage.removeItem("AuthToken")
+                window.location.href = "login.html";
+            },
+            goto(target){
+                window.location.href = target;
+            }
+        },
+        mounted() {
+            this.pageList();
+            this.user=JSON.parse(localStorage.getItem("USER"))
+        }
+    })
+
+
+</script>
+	<style type="text/css">
+		.el-footer {
+			background-color: #B3C0D1;
+			color: #333;
+			text-align: center;
+			line-height: 60px;
+		}
+
+		.el-header {
+			background-color: #B3C0D1;
+			color: #333;
+			line-height: 60px;
+		}
+
+		.el-aside {
+			background-color: #D3DCE6;
+			color: #333;
+			text-align: left;
+			line-height: 200px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+
+		.el-aside::-webkit-scrollbar {
+			display: none;
+		}
+
+		.el-main {
+			background-color: #E9EEF3;
+			color: #333;
+			text-align: center;
+		}
+
+		.breadcrumb {
+			line-height: 54px;
+			padding: 0 20px;
+			border-bottom: 1px solid #e6e6e6;
+		}
+
+		.avatar-uploader .el-upload {
+			border: 1px dashed #d9d9d9;
+			border-radius: 6px;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.avatar-uploader .el-upload:hover {
+			border-color: #409EFF;
+		}
+
+		.avatar-uploader-icon {
+			font-size: 28px;
+			color: #8c939d;
+			width: 178px;
+			height: 178px;
+			line-height: 178px;
+			text-align: center;
+		}
+
+		.avatar {
+			width: 178px;
+			height: 178px;
+			display: block;
+		}
+	</style>
+</html>

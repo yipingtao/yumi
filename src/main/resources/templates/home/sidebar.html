@@ -1,0 +1,22 @@
+<el-container style="height: 100%;overflow: auto">
+	<el-aside width="200px" style="background-color: white;">
+		<el-menu default-active="3">
+			<el-menu-item index="1" @click="goto('user.html')">
+				<i class="el-icon-menu"></i>
+				<span slot="title">用户管理</span>
+			</el-menu-item>
+			<el-menu-item index="2" @click="goto('store.html')">
+				<i class="el-icon-menu"></i>
+				<span slot="title">店铺管理</span>
+			</el-menu-item>
+			<el-menu-item index="3" @click="goto('goods.html')">
+				<i class="el-icon-menu"></i>
+				<span slot="title">商品管理</span>
+			</el-menu-item>
+			<el-menu-item index="4" @click="goto('order.html')">
+				<i class="el-icon-menu"></i>
+				<span slot="title">订单管理</span>
+			</el-menu-item>
+		</el-menu>
+	</el-aside>
+	<el-container>

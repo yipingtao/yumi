@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/home/home",
+    "pages/home/listDetail",
+    "pages/appointment/appointment",
+    "pages/order/order",
+    "pages/setting/setting",
+    "pages/home/map"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "美甲美睫",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#ff0000",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/image/1.png",
+        "selectedIconPath": "static/image/1s.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "iconPath": "static/image/3.png",
+        "selectedIconPath": "static/image/3s.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "iconPath": "static/image/5.png",
+        "selectedIconPath": "static/image/5s.png",
+        "text": "我"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

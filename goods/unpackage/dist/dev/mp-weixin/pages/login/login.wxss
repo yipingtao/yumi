@@ -1,0 +1,69 @@
+
+.content{
+	height: 100vh;
+}
+.avatarWrapper {
+	height: 30vh;
+	width: 100vw;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center; /*属性定义了项目在主轴上的对齐方式 */
+	-webkit-box-align: end;
+	-webkit-align-items: flex-end;
+	        align-items: flex-end; /*属性定义项目在交叉轴上如何对齐 */
+}
+.avatar {
+	width: 300rpx;
+	height: 300rpx;
+	overflow: hidden;
+}
+.avatar .img {
+	width: 100%;
+}
+.form {
+	padding: 0 100rpx;
+	margin-top: 80px;
+}
+.inputWrapper {
+	width: 100%;
+	height: 80rpx;
+	background: white;
+	border-radius: 20px;
+	box-sizing: border-box;
+	padding: 0 20px;
+	margin-top: 25px;
+}
+.inputWrapper .input{
+	width: 100%;
+	height: 100%;
+	font-size: 15px;
+	text-align: center;
+}
+.loginBtn{
+	width: 100%;
+	height: 80rpx;
+	/* background: #61a0d2; */
+	border-radius: 50rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-top: 50px;
+}
+.loginBtn .btnValue { 
+	color: white;
+}
+.forgotBtn{
+	text-align: center;
+	color: white;
+	margin-top: 20px;
+}
+
